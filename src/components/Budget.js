@@ -30,6 +30,7 @@ const Budget = () => {
 
     return (
         <div className='alert alert-secondary'>
+          
             <span>Currency:</span>
             <select
                 value={selectedCurrency}
@@ -42,10 +43,13 @@ const Budget = () => {
                 <option value="€">€ Euro</option>
                 <option value="₹">₹ Ruppee</option>
             </select>
-
+            
             <br />
 
             <label htmlFor="budgetInput">Budget:</label>
+            
+            <span>{currency}</span>
+        
             <input
                 id="budgetInput"
                 type="number"

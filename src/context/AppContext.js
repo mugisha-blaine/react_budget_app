@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer,} from 'react';
 
 // 5. The reducer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
@@ -65,16 +65,33 @@ export const AppReducer = (state, action) => {
                 ...state,
             };
         case 'CHG_CURRENCY':
-            action.type = "DONE";
-            state.currency = action.payload;
+            const newCurrency = action.payload;
+            // Convert the budget and expenses to the new currency
+            const updatedBudget = convertCurrency(state.budget, state.currency, newCurrency);
+            const updatedExpenses = state.expenses.map(expense => ({
+                ...expense,
+                cost: convertCurrency(expense.cost, state.currency, newCurrency)
+            }));
+
             return {
-                ...state
-            }
+                ...state,
+                budget: updatedBudget,
+                expenses: updatedExpenses,
+                currency: newCurrency,
+            };
 
         default:
             return state;
     }
 };
+
+const convertCurrency = (amount, fromCurrency, toCurrency) => {
+    // Logic to convert currency from one symbol to another goes here
+    // This could involve APIs or conversion rates depending on your use case
+    // For this example, assuming a 1:1 conversion rate (which is not accurate in real scenarios)
+    return amount; // Replace this with the converted amount
+};
+    
 
 // 1. Sets the initial state when the app loads
 const initialState = {

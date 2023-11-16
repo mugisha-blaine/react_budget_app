@@ -1,9 +1,29 @@
 import React, { useContext } from 'react';
 import { TiDelete } from 'react-icons/ti';
 import { AppContext } from '../context/AppContext';
+import styled from 'styled-components'; // Import styled-components library
+
+// Styled components for the increase and decrease buttons
+const IncreaseButton = styled.button`
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: green;
+    color: white;
+`;
+
+const StyledTiDelete = styled(TiDelete)`
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: red;
+    color: white;
+`;
 
 const ExpenseItem = (props) => {
-    const { dispatch } = useContext(AppContext);
+    const { dispatch, currency } = useContext(AppContext);
 
     const handleDeleteExpense = () => {
         dispatch({
@@ -28,9 +48,12 @@ const ExpenseItem = (props) => {
     return (
         <tr>
         <td>{props.name}</td>
-        <td>£{props.cost}</td>
-        <td><button onClick={event=> increaseAllocation(props.name)}>+</button></td>
-        <td><TiDelete size='1.5em' onClick={handleDeleteExpense}></TiDelete></td>
+        <td>{currency}{props.cost}</td>
+        <td>
+            < IncreaseButton onClick={event=> increaseAllocation(props.name)}>+</IncreaseButton>
+    
+            </td>
+        <td><StyledTiDelete size='1.5em' onClick={handleDeleteExpense}>-</StyledTiDelete></td>
         </tr>
     );
 };
